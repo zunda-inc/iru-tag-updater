@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IruTagUpdater/IruTagUpdater.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/IruTagUpdater.Tests/IruTagUpdater.Tests.csproj" />
+  </Folder>
+</Solution>

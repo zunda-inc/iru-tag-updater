@@ -1,0 +1,13 @@
+# シークレット・環境依存 (イメージに含めない)
+.env
+config.json
+
+# ビルド成果物・不要物
+**/bin/
+**/obj/
+.git/
+.gitignore
+vibe-plans/
+docs/
+tests/
+README.md

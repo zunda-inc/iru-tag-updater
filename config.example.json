@@ -1,0 +1,18 @@
+{
+  "endpoint": "https://example.api.kandji.io",
+  "updates": [
+    {
+      "tag": "Iru Installed",
+      "conditions": [
+        {
+          "query": "apps",
+          "filter": { "bundle_id": { "in": ["io.kandji.Self-Service-Mobile"] } }
+        },
+        {
+          "query": "certificates",
+          "filter": { "common_name": { "in": ["MDM SCEP VERIFIER aaaaaaaa-bbbb-cccc-dddd-eeeeffff9999"] } }
+        }
+      ]
+    }
+  ]
+}

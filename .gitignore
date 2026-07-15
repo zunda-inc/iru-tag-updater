@@ -1,0 +1,15 @@
+# シークレット・環境依存 (リポジトリに含めない)
+.env
+config.json
+
+# ベンダー資料 (リポジトリに含めない)
+vendor/
+
+# .NET ビルド成果物
+bin/
+obj/
+*.user
+
+# IDE
+.vs/
+.idea/
