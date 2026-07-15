@@ -102,3 +102,9 @@ src/IruTagUpdater/
   TagUpdateService.cs         コアアルゴリズム（積集合・未タグ抽出・和集合付与）
 tests/IruTagUpdater.Tests/    xUnit テスト
 ```
+
+## ライセンス
+
+[MIT License](LICENSE) の下で公開しています。
+
+Copyright (c) 2026 ZUNDA Inc.
