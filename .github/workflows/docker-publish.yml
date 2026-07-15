@@ -11,6 +11,10 @@ concurrency:
   group: docker-publish-${{ github.ref }}
   cancel-in-progress: true
 
+# 既定は最小権限 (read-only)。書き込みが必要なジョブで個別に上書きする。
+permissions:
+  contents: read
+
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository }} # = ghcr.io/zunda-inc/iru-tag-updater
 
