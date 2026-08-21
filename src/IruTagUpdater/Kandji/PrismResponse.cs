@@ -11,6 +11,15 @@ public sealed class PrismResponse
     /// <summary>次ページ用カーソル。null / 空 ならページ終端。</summary>
     [JsonPropertyName("cursor")]
     public string? Cursor { get; init; }
+
+    [JsonPropertyName("offset")]
+    public int? Offset { get; init; }
+
+    [JsonPropertyName("limit")]
+    public int? Limit { get; init; }
+
+    [JsonPropertyName("total")]
+    public int? Total { get; init; }
 }
 
 /// <summary>

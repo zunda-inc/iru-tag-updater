@@ -12,6 +12,8 @@ namespace IruTagUpdater.Kandji;
 /// </summary>
 public sealed class KandjiClient(HttpClient http, ILogger<KandjiClient> logger) : IKandjiClient
 {
+    private const int PrismPageLimit = 300;
+
     // カーソル/ページの暴走防止 (300 * 5000 = 150 万行相当で十分な上限)。
     private const int MaxPages = 5000;
 
@@ -25,29 +27,32 @@ public sealed class KandjiClient(HttpClient http, ILogger<KandjiClient> logger) 
     {
         var filterJson = filter.ToJsonString();
         var rows = new List<PrismRow>();
-        string? cursor = null;
+        var offset = 0;
 
         for (var page = 0; page < MaxPages; page++)
         {
             var url = $"api/v1/prism/{Uri.EscapeDataString(category)}"
-                      + $"?filter={Uri.EscapeDataString(filterJson)}";
-            if (!string.IsNullOrEmpty(cursor))
-            {
-                url += $"&cursor={Uri.EscapeDataString(cursor)}";
-            }
+                      + $"?filter={Uri.EscapeDataString(filterJson)}"
+                      + $"&limit={PrismPageLimit}&offset={offset}";
 
             var response = await GetAsync<PrismResponse>(url, ct);
+
+            logger.LogInformation(
+                "API Response from {url} was offset {offset}, limit {limit}, total {total}, data count {dataCount}",
+                url, response.Offset, response.Limit, response.Total, response.Data.Count
+            );
+
             if (response.Data.Count > 0)
             {
                 rows.AddRange(response.Data);
             }
 
-            if (string.IsNullOrEmpty(response.Cursor) || response.Data.Count == 0)
+            if (response.Data.Count == 0)
             {
                 return rows;
             }
 
-            cursor = response.Cursor;
+            offset += response.Data.Count;
         }
 
         throw new KandjiApiException(
@@ -138,6 +143,7 @@ public sealed class KandjiClient(HttpClient http, ILogger<KandjiClient> logger) 
         {
             return abs.PathAndQuery.TrimStart('/');
         }
+
         return absoluteOrRelative.TrimStart('/');
     }
 }
