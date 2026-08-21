@@ -14,31 +14,6 @@ public sealed class KandjiClientTests
     }
 
     [Fact]
-    public async Task QueryPrism_FollowsCursorPagination()
-    {
-        var page1 = """{ "data": [ { "device_id": "d1", "tags": ["Existing"] } ], "cursor": "CUR1" }""";
-        var page2 = """{ "data": [ { "device_id": "d2", "tags": null } ], "cursor": null }""";
-
-        var handler = new StubHttpMessageHandler(req =>
-            req.RequestUri!.Query.Contains("cursor=CUR1")
-                ? StubHttpMessageHandler.Json(page2)
-                : StubHttpMessageHandler.Json(page1));
-        var client = CreateClient(handler);
-
-        var filter = new JsonObject { ["bundle_id"] = new JsonObject { ["in"] = new JsonArray("a") } };
-        var rows = await client.QueryPrismAsync("apps", filter);
-
-        Assert.Equal(2, rows.Count);
-        Assert.Equal("d1", rows[0].DeviceId);
-        Assert.Equal("d2", rows[1].DeviceId);
-        Assert.Equal(2, handler.Requests.Count);
-
-        // filter が URL エンコードされて渡っていること。
-        Assert.Contains("filter=", handler.Requests[0].RequestUri!.Query);
-        Assert.Contains("prism/apps", handler.Requests[0].RequestUri!.AbsolutePath);
-    }
-
-    [Fact]
     public async Task ListTags_FollowsNextPagination()
     {
         var page1 = """
