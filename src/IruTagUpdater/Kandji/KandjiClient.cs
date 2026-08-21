@@ -12,7 +12,6 @@ namespace IruTagUpdater.Kandji;
 /// </summary>
 public sealed class KandjiClient(HttpClient http, ILogger<KandjiClient> logger) : IKandjiClient
 {
-    private const int PrismPageLimit = 300;
     // カーソル/ページの暴走防止 (300 * 5000 = 150 万行相当で十分な上限)。
     private const int MaxPages = 5000;
 
@@ -31,8 +30,7 @@ public sealed class KandjiClient(HttpClient http, ILogger<KandjiClient> logger) 
         for (var page = 0; page < MaxPages; page++)
         {
             var url = $"api/v1/prism/{Uri.EscapeDataString(category)}"
-                    + $"?filter={Uri.EscapeDataString(filterJson)}"
-                    + $"&limit={PrismPageLimit}";
+                      + $"?filter={Uri.EscapeDataString(filterJson)}";
             if (!string.IsNullOrEmpty(cursor))
             {
                 url += $"&cursor={Uri.EscapeDataString(cursor)}";
