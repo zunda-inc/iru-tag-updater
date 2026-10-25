@@ -81,7 +81,7 @@ dotnet test
 
 ## デプロイ
 
-Cloud Run Jobs + Cloud Scheduler の手順は [`deploy/deploy.md`](deploy/deploy.md) を参照。
+Cloud Run Jobs + Cloud Scheduler へのデプロイの流れ（GHCR → Terraform）は [`deploy/deploy.md`](deploy/deploy.md) を参照。
 
 ## 終了コード
 
