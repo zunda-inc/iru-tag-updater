@@ -11,7 +11,7 @@ COPY src/ src/
 RUN dotnet publish src/IruTagUpdater/IruTagUpdater.csproj -c Release -o /app
 
 # ---- runtime ----
-FROM mcr.microsoft.com/dotnet/runtime:10.0 AS runtime
+FROM mcr.microsoft.com/dotnet/runtime:11.0 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
 
